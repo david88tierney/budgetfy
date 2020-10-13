@@ -20,5 +20,12 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.teams = require("./team.model.js")(sequelize, Sequelize);
+db.bills = require('./bill.model.js')(sequelize, Sequelize);
+
+db.teams.hasMany(db.bills, { as: "bills" });
+db.bills.belongsTo(db.teams, {
+  foreignKey: "teamId",
+  as: "team",
+});
 
 module.exports = db;
